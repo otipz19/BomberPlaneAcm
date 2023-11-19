@@ -8,14 +8,6 @@ bin/
 lib/
 *.jar
 
-# Media files
-images/
-*.png
-*.jpg
-*.gif
-*.mp3
-*.wav
-
 # Other packages
 *.war
 *.nar
