@@ -1,16 +1,25 @@
-# Folders
+# IDE specific files and builds
+*.class
+*.log
 bin/
 .settings/
-lib/
-images/
 
-# Specific libraries
-*acm*.jar
-*karel*.jar
+# Libraries and JARs
+lib/
+*.jar
 
 # Media files
+images/
 *.png
 *.jpg
 *.gif
 *.mp3
 *.wav
+
+# Other packages
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
