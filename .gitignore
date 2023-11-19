@@ -1,0 +1,16 @@
+# Folders
+bin/
+.settings/
+lib/
+images/
+
+# Specific libraries
+*acm*.jar
+*karel*.jar
+
+# Media files
+*.png
+*.jpg
+*.gif
+*.mp3
+*.wav
