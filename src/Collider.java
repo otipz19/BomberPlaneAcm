@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 import acm.graphics.*;
 
 public class Collider extends GRect{
@@ -32,7 +34,8 @@ public class Collider extends GRect{
 	
 	private void setState(GObject parent) {
 		this.parent = parent;
-		setVisible(false);
+		setColor(Color.RED);
+		setVisible(true);
 	}
 	
 	private boolean isCornerInRect(GPoint corner, GRect rect, GPoint rectPivot){

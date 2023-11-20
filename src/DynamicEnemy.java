@@ -1,32 +1,22 @@
-import acm.graphics.*;
+import acm.graphics.GImage;
 
-
-public class Plane extends GCompound{
-	private GImage sprite;
-	private ExplosionAnimator explosionAnimator;
-	private Collider collider;
-	
+public class DynamicEnemy extends Enemy{
 	private Direction direction;
+	private double speed;
 	private double width;
 	private double height;
-	private double speed;
-	private double angle;
 	private double horizontalBorder;
-	private double verticalBorder;
+	private ExplosionAnimator explosionAnimator;
 	
-	public Plane(double x, double y, double width, double height, Direction direction, double speed, double angle, double horizontalBorder, double verticalBorder){
+	public DynamicEnemy(double x, double y, double width, double height, double speed, double horizontalBorder, Direction direction){
+		setLocation(x, y);
 		this.width = width;
 		this.height = height;
-		this.direction = direction;
 		this.speed = speed;
-		this.angle = angle;
 		this.horizontalBorder = horizontalBorder;
-		this.verticalBorder = verticalBorder;
+		this.direction = direction;
 		changeSprite();
-		explosionAnimator = new ExplosionAnimator(width, height);
-		add(explosionAnimator);
-		this.setLocation(x, y);
-		collider = new Collider(0, sprite.getHeight() * 1.5 / 5, sprite.getWidth(), sprite.getHeight() * 2.0 / 5, this);
+		collider = new Collider(sprite.getWidth() / 4, 0, sprite.getWidth() / 2, sprite.getHeight(), this);
 		add(collider);
 	}
 	
@@ -55,15 +45,12 @@ public class Plane extends GCompound{
 	
 	private void move(){
 		if(direction == Direction.RIGHT){
-			movePolar(speed, -angle);
+			move(speed, 0);
 		}
 		else{
-			movePolar(-speed, angle);
+			move(-speed, 0);
 		}
-		handleLandCollision();
-		if(isAlive()){
-			handleWallCollision();
-		}
+		handleWallCollision();
 	}
 	
 	private boolean isAlive(){
@@ -85,12 +72,6 @@ public class Plane extends GCompound{
 		}
 	}
 	
-	private void handleLandCollision(){
-		if(getY() + sprite.getHeight() > verticalBorder){
-			startDying();
-		}
-	}
-	
 	private void startDying(){
 		remove(sprite);
 		sprite = null;
@@ -101,7 +82,7 @@ public class Plane extends GCompound{
 		if(sprite != null){
 			remove(sprite);
 		}
-		sprite = new GImage(direction == Direction.LEFT ? Images.PLANE_LEFT : Images.PLANE_RIGHT);
+		sprite = new GImage(direction == Direction.LEFT ? Images.TANK_LEFT : Images.TANK_RIGHT);
 		sprite.setSize(width, height);
 		add(sprite);
 	}
