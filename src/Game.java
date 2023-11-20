@@ -33,6 +33,9 @@ public class Game extends GraphicsProgram{
 	public void run(){
 		while(plane.isActing()){
 			plane.act();
+			if(plane.getCollider().checkCollision(staticEnemy.getCollider())){
+				plane.onCollision();
+			}
 			pause(FRAME_UPDATE_INTERVAL);
 		}
 	}

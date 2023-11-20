@@ -4,6 +4,7 @@ import acm.graphics.*;
 public class Plane extends GCompound{
 	private GImage sprite;
 	private ExplosionAnimator explosionAnimator;
+	private Collider collider;
 	
 	private Direction direction;
 	private double width;
@@ -25,6 +26,8 @@ public class Plane extends GCompound{
 		explosionAnimator = new ExplosionAnimator(width, height);
 		add(explosionAnimator);
 		this.setLocation(x, y);
+		collider = new Collider(0, sprite.getHeight() * 1.5 / 5, sprite.getWidth(), sprite.getHeight() * 2.0 / 5, this);
+		add(collider);
 	}
 	
 	public boolean isActing(){
@@ -40,6 +43,16 @@ public class Plane extends GCompound{
 		}
 	}
 	
+	public Collider getCollider(){
+		return collider;
+	}
+	
+	public void onCollision(){
+		if(isAlive() && !isDying()){
+			startDying();
+		}
+	}
+	
 	private void move(){
 		if(direction == Direction.RIGHT){
 			movePolar(speed, -angle);
@@ -47,7 +60,7 @@ public class Plane extends GCompound{
 		else{
 			movePolar(-speed, angle);
 		}
-		handleEnemyCollision();
+		//handleEnemyCollision();
 		if(isAlive()){
 			handleLandCollision();
 		}
@@ -81,9 +94,9 @@ public class Plane extends GCompound{
 		}
 	}
 	
-	private void handleEnemyCollision(){
+	/*private void handleEnemyCollision(){
 		for(double x = getX(); x <= getX() + sprite.getWidth(); x += sprite.getWidth()){
-			for(double y = getY(); y <= getY() + sprite.getHeight() / 2 ; y += sprite.getHeight() / 2){
+			for(double y = getY(); y <= getY() + sprite.getHeight() ; y += sprite.getHeight()){
 				GObject object = Game.getObjectAt(x, y);
 				if(object != null && object instanceof Enemy){
 					startDying();
@@ -91,7 +104,7 @@ public class Plane extends GCompound{
 				}
 			}
 		}
-	}
+	}*/
 	
 	private void startDying(){
 		remove(sprite);
