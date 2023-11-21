@@ -17,9 +17,8 @@ public class Game extends GraphicsProgram{
 	
 	private GImage background;
 	private Plane plane;
-	private StaticEnemy staticEnemy;
-	private DynamicEnemy dynamicEnemy;
 	private Bomb bomb;
+	private EnemyManager enemyManager;
 	
 	public static GObject getObjectAt(double x, double y){
 		return instance.getElementAt(x, y);
@@ -30,33 +29,24 @@ public class Game extends GraphicsProgram{
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		createBackground();
 		createPlane();
-		staticEnemy = new StaticEnemy(SCREEN_WIDTH / 2, SCENE_BOTTOM - 100, 100, 100);
-		add(staticEnemy);
-		dynamicEnemy = new DynamicEnemy(100, SCENE_BOTTOM - 50, 100, 50, 10, Direction.LEFT);
-		add(dynamicEnemy);
+		enemyManager = new EnemyManager(this);
 		addKeyListeners();
 	}
 	
 	public void run(){
 		while(plane.isActing()){
 			plane.act();
-			if(dynamicEnemy.isActing()){
-				dynamicEnemy.act();
-			}
 			if(bomb != null){
 				if(bomb.isActing()){
 					bomb.act();
+					enemyManager.checkBombCollisions(bomb);
 				}
 				else{
 					remove(bomb);
 				}
 			}
-			if(plane.getCollider().checkCollision(staticEnemy.getCollider())){
-				plane.onCollision();
-			}
-			if(plane.getCollider().checkCollision(dynamicEnemy.getCollider())){
-				plane.onCollision();
-			}
+			enemyManager.checkPlaneCollisions(plane);
+			enemyManager.act();
 			pause(FRAME_UPDATE_INTERVAL);
 		}
 	}

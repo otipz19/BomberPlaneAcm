@@ -14,7 +14,8 @@ public class EnemyManager {
 	
 	private int enemiesCount = ENEMIES_MAX;
 	
-	public EnemyManager(){
+	public EnemyManager(Game game){
+		this.game = game;
 		s0 = new StaticEnemy(getRandomX(100), Game.SCENE_BOTTOM - 100, 100, 100);
 		d1 = new DynamicEnemy(getRandomX(100), Game.SCENE_BOTTOM - 50, 100, 50, 10, getRandomDirection());
 		d2 = new DynamicEnemy(getRandomX(100), Game.SCENE_BOTTOM - 50, 100, 50, 10, getRandomDirection());
@@ -22,6 +23,32 @@ public class EnemyManager {
 		d4 = new DynamicEnemy(getRandomX(100), Game.SCENE_BOTTOM - 50, 100, 50, 10, getRandomDirection());
 		for(int i = 0; i < enemiesCount; i++){
 			game.add(getEnemy(i));
+		}
+	}
+	
+	public void act(){
+		for(int i = 0; i < ENEMIES_MAX; i++){
+			if(getEnemy(i).isActing()){
+				getEnemy(i).act();
+			}
+		}
+	}
+	
+	public void checkPlaneCollisions(Plane plane){
+		for(int i = 0; i < ENEMIES_MAX; i++){
+			if(plane.getCollider().checkCollision(getEnemy(i).getCollider())){
+				plane.onCollision();
+			}
+		}
+	}
+	
+	public void checkBombCollisions(Bomb bomb){
+		for(int i = 0; i < ENEMIES_MAX; i++){
+			if(bomb.getCollider().checkCollision(getEnemy(i).getCollider())){
+				bomb.onCollision();
+				getEnemy(i).onCollision();
+				enemiesCount--;
+			}
 		}
 	}
 	

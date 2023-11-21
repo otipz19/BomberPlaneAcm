@@ -5,9 +5,9 @@ public class DynamicEnemy extends Enemy{
 	private double speed;
 	private double width;
 	private double height;
-	private ExplosionAnimator explosionAnimator;
 	
 	public DynamicEnemy(double x, double y, double width, double height, double speed, Direction direction){
+		super(width, height);
 		setLocation(x, y);
 		this.width = width;
 		this.height = height;
@@ -18,30 +18,7 @@ public class DynamicEnemy extends Enemy{
 		add(collider);
 	}
 	
-	public boolean isActing(){
-		return isAlive() || isDying();
-	}
-	
-	public void act(){
-		if(isAlive()){
-			move();
-		}
-		else{
-			explosionAnimator.animate();
-		}
-	}
-	
-	public Collider getCollider(){
-		return collider;
-	}
-	
-	public void onCollision(){
-		if(isAlive() && !isDying()){
-			startDying();
-		}
-	}
-	
-	private void move(){
+	protected void move(){
 		if(direction == Direction.RIGHT){
 			move(speed, 0);
 		}
@@ -49,14 +26,6 @@ public class DynamicEnemy extends Enemy{
 			move(-speed, 0);
 		}
 		handleWallCollision();
-	}
-	
-	private boolean isAlive(){
-		return sprite != null;
-	}
-	
-	private boolean isDying(){
-		return explosionAnimator.isRunning();
 	}
 	
 	private void handleWallCollision(){	
@@ -68,12 +37,6 @@ public class DynamicEnemy extends Enemy{
 			direction = Direction.RIGHT;
 			changeSprite();
 		}
-	}
-	
-	private void startDying(){
-		remove(sprite);
-		sprite = null;
-		explosionAnimator.startAnimation();
 	}
 	
 	private void changeSprite(){

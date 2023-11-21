@@ -54,7 +54,7 @@ public class Plane extends GCompound{
 	public Bomb dropBomb(){
 		double width = getWidth() / 3;
 		double height = getHeight() / 2;
-		return new Bomb(getX(), getY(), width, height, 20);
+		return new Bomb(getX(), getY(), width, height, 35);
 	}
 	
 	private void move(){

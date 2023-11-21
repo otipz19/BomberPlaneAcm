@@ -35,7 +35,7 @@ public class Collider extends GRect{
 	private void setState(GObject parent) {
 		this.parent = parent;
 		setColor(Color.RED);
-		setVisible(true);
+		setVisible(false);
 	}
 	
 	private boolean isCornerInRect(GPoint corner, GRect rect, GPoint rectPivot){
