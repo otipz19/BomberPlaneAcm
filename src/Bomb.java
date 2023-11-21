@@ -23,8 +23,11 @@ public class Bomb extends Actor{
 		}
 	}
 
-	@Override
 	protected String getImageName() {
 		return Images.BOMB;
+	}
+	
+	protected void playDeathSound(){
+		AudioManager.playExplosion();
 	}
 }

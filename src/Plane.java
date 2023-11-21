@@ -42,6 +42,10 @@ public class Plane extends Actor{
 		}
 	}
 	
+	protected void playDeathSound(){
+		AudioManager.playPlaneCrash();
+	}
+	
 	private void handleWallCollision(){	
 		if(getX() + sprite.getWidth() > Game.SCENE_HORIZONTAL_BORDER){
 			direction = Direction.LEFT;

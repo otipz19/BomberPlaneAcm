@@ -42,6 +42,8 @@ public abstract class Actor extends GCompound{
 	
 	protected abstract String getImageName();
 	
+	protected abstract void playDeathSound();
+	
 	protected boolean isAlive(){
 		return sprite != null;
 	}
@@ -54,6 +56,7 @@ public abstract class Actor extends GCompound{
 		remove(sprite);
 		sprite = null;
 		explosionAnimator.startAnimation();
+		playDeathSound();
 	}
 	
 	protected void changeSprite(){

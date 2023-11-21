@@ -1,8 +1,7 @@
 import java.awt.event.KeyEvent;
 
-import acm.graphics.GImage;
-import acm.graphics.GObject;
-import acm.program.GraphicsProgram;
+import acm.graphics.*;
+import acm.program.*;
 
 public class Game extends GraphicsProgram{
 	private static final int SCREEN_WIDTH = 1000;
@@ -13,24 +12,20 @@ public class Game extends GraphicsProgram{
 	public static final double SCENE_BOTTOM = SCREEN_HEIGHT - SCREEN_HEIGHT * SCENE_BOTTOM_PROPORTION;
 	public static final double SCENE_HORIZONTAL_BORDER = SCREEN_WIDTH;
 	
-	private static Game instance;
-	
 	private GImage background;
 	private Plane plane;
 	private Bomb bomb;
 	private EnemyManager enemyManager;
-	
-	public static GObject getObjectAt(double x, double y){
-		return instance.getElementAt(x, y);
-	}
+	private AudioManager audioManager;
 	
 	public void init(){
-		instance = this;
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		createBackground();
 		createPlane();
 		enemyManager = new EnemyManager(this);
 		addKeyListeners();
+		audioManager = new AudioManager();
+		audioManager.playBackground();
 	}
 	
 	public void run(){
