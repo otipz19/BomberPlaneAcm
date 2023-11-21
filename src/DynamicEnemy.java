@@ -5,15 +5,13 @@ public class DynamicEnemy extends Enemy{
 	private double speed;
 	private double width;
 	private double height;
-	private double horizontalBorder;
 	private ExplosionAnimator explosionAnimator;
 	
-	public DynamicEnemy(double x, double y, double width, double height, double speed, double horizontalBorder, Direction direction){
+	public DynamicEnemy(double x, double y, double width, double height, double speed, Direction direction){
 		setLocation(x, y);
 		this.width = width;
 		this.height = height;
 		this.speed = speed;
-		this.horizontalBorder = horizontalBorder;
 		this.direction = direction;
 		changeSprite();
 		collider = new Collider(sprite.getWidth() / 4, 0, sprite.getWidth() / 2, sprite.getHeight(), this);
@@ -62,7 +60,7 @@ public class DynamicEnemy extends Enemy{
 	}
 	
 	private void handleWallCollision(){	
-		if(getX() + sprite.getWidth() > horizontalBorder){
+		if(getX() + sprite.getWidth() > Game.SCENE_HORIZONTAL_BORDER){
 			direction = Direction.LEFT;
 			changeSprite();
 		}

@@ -1,3 +1,5 @@
+import java.awt.event.*;
+
 import acm.graphics.*;
 
 
@@ -11,17 +13,13 @@ public class Plane extends GCompound{
 	private double height;
 	private double speed;
 	private double angle;
-	private double horizontalBorder;
-	private double verticalBorder;
 	
-	public Plane(double x, double y, double width, double height, Direction direction, double speed, double angle, double horizontalBorder, double verticalBorder){
+	public Plane(double x, double y, double width, double height, Direction direction, double speed, double angle){
 		this.width = width;
 		this.height = height;
 		this.direction = direction;
 		this.speed = speed;
 		this.angle = angle;
-		this.horizontalBorder = horizontalBorder;
-		this.verticalBorder = verticalBorder;
 		changeSprite();
 		explosionAnimator = new ExplosionAnimator(width, height);
 		add(explosionAnimator);
@@ -53,6 +51,12 @@ public class Plane extends GCompound{
 		}
 	}
 	
+	public Bomb dropBomb(){
+		double width = getWidth() / 3;
+		double height = getHeight() / 2;
+		return new Bomb(getX(), getY(), width, height, 20);
+	}
+	
 	private void move(){
 		if(direction == Direction.RIGHT){
 			movePolar(speed, -angle);
@@ -75,7 +79,7 @@ public class Plane extends GCompound{
 	}
 	
 	private void handleWallCollision(){	
-		if(getX() + sprite.getWidth() > horizontalBorder){
+		if(getX() + sprite.getWidth() > Game.SCENE_HORIZONTAL_BORDER){
 			direction = Direction.LEFT;
 			changeSprite();
 		}
@@ -86,7 +90,7 @@ public class Plane extends GCompound{
 	}
 	
 	private void handleLandCollision(){
-		if(getY() + sprite.getHeight() > verticalBorder){
+		if(getY() + sprite.getHeight() > Game.SCENE_BOTTOM){
 			startDying();
 		}
 	}
