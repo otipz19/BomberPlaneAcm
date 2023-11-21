@@ -1,50 +1,18 @@
 import acm.graphics.*;
 
-public class Bomb extends GCompound{
-	private GImage sprite;
-	private Collider collider;
-	private ExplosionAnimator explosionAnimator;
+public class Bomb extends Actor{
 	private double speed;
 	
 	public Bomb(double x, double y, double width, double height, double speed){
+		super(width, height);
 		this.setLocation(x, y);
-		sprite = new GImage(Images.BOMB);
-		sprite.setSize(width, height);
-		add(sprite);
+		changeSprite();
 		this.speed = speed;
-		collider = new Collider(0, 0, width, height, this);
+		collider = new Collider(0, 1.0 / 6 * height, width, 2.0 / 3 * height, this);
 		add(collider);
-		explosionAnimator = new ExplosionAnimator(width, height);
-		add(explosionAnimator);
 	}
 	
-	public Collider getCollider(){
-		return collider;
-	}
-	
-	public boolean isActing(){
-		return isAlive() || isDying();
-	}
-	
-	public void act(){
-		if(isActing()){
-			if(isAlive()){
-				move();
-			}
-			else{
-				explosionAnimator.animate();
-			}
-		}
-	}
-	
-	public void onCollision(){
-		if(isAlive() && !isDying()){
-			remove(sprite);
-			sprite = null;
-		}
-	}
-	
-	private void move(){
+	protected void move(){
 		move(0, speed);
 		handleLandCollision();
 	}
@@ -54,18 +22,9 @@ public class Bomb extends GCompound{
 			startDying();
 		}
 	}
-	
-	private void startDying(){
-		remove(sprite);
-		sprite = null;
-		explosionAnimator.startAnimation();
-	}
-	
-	private boolean isAlive(){
-		return sprite != null;
-	}
-	
-	private boolean isDying(){
-		return explosionAnimator.isRunning();
+
+	@Override
+	protected String getImageName() {
+		return Images.BOMB;
 	}
 }

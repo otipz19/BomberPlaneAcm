@@ -43,6 +43,10 @@ public class EnemyManager {
 	}
 	
 	public void checkBombCollisions(Bomb bomb){
+		if(bomb == null || bomb.isDying()){
+			return;
+		}
+		
 		for(int i = 0; i < ENEMIES_MAX; i++){
 			if(bomb.getCollider().checkCollision(getEnemy(i).getCollider())){
 				bomb.onCollision();

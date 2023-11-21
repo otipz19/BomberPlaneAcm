@@ -16,4 +16,9 @@ public class StaticEnemy extends Enemy{
 	protected void move() {
 		
 	}
+
+	@Override
+	protected String getImageName() {
+		return Images.BUNKER;
+	}
 }
