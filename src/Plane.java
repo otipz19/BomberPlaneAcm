@@ -1,8 +1,3 @@
-import java.awt.event.*;
-
-import acm.graphics.*;
-
-
 public class Plane extends Actor{	
 	private Direction direction;
 	private double speed;

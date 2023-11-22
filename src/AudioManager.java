@@ -10,12 +10,19 @@ public class AudioManager {
 	
 	private static AudioManager instance;
 	
+	private static Clip backgroundClip;
+	
 	public AudioManager(){
 		instance = this;
 	}
 	
 	public static void playBackground(){
-		instance.play(BACKGROUND);
+		if(backgroundClip != null){
+			backgroundClip.stop();
+			backgroundClip.close();
+		}
+		backgroundClip = instance.createClip(BACKGROUND);
+		backgroundClip.start();
 	}
 	
 	public static void playExplosion(){
@@ -27,13 +34,18 @@ public class AudioManager {
 	}
 	
 	public void play(String filePath){
-    	InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
+    	Clip clip = createClip(filePath);
+    	clip.start();
+    }
+	
+	private Clip createClip(String filePath){
+		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
 		try {
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(inputStream);
 			Clip audioClip;
 			audioClip = AudioSystem.getClip();
 			audioClip.open(audioStream);
-			audioClip.start();
+			return audioClip;
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -42,5 +54,6 @@ public class AudioManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+		return null;
+	}
 }

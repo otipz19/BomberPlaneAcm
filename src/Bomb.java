@@ -1,5 +1,3 @@
-import acm.graphics.*;
-
 public class Bomb extends Actor{
 	private double speed;
 	
